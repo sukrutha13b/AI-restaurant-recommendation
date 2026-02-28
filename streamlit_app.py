@@ -103,7 +103,7 @@ if st.sidebar.button("Find Restaurants", type="primary", use_container_width=Tru
             
             # Execute Pipeline
             all_r = load_restaurants()
-            results = run_pipeline(all_r, prefs, llm_client=llm_client)
+            results = run_pipeline(all_r, prefs, llm_client=llm_client, raise_llm_errors=True)
             
             # --- Rendering Results ---
             if not results:

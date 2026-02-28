@@ -21,6 +21,7 @@ def run_pipeline(
     restaurants: List[Restaurant],
     preferences: UserPreferences,
     llm_client: Optional["GeminiRecommender"] = None,
+    raise_llm_errors: bool = False,
 ) -> List[Restaurant]:
     """
     Run the deterministic recommendation pipeline and optionally re-rank with LLM.
@@ -68,6 +69,8 @@ def run_pipeline(
         except Exception as e:
             # We catch all exceptions so the API remains resilient
             log.warning("LLM re-ranking failed, falling back to deterministic sort: %s", e)
+            if raise_llm_errors:
+                raise
 
     # Fallback / Phase 2 Deterministic Return
     return ranked[: preferences.top_n]
