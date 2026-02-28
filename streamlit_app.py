@@ -74,35 +74,22 @@ top_n = st.sidebar.number_input(
 )
 
 st.sidebar.markdown("---")
-st.sidebar.header("AI Settings")
-
-use_ai = st.sidebar.checkbox("Enable AI Re-ranking (Gemini)", value=True)
-model_name = st.sidebar.selectbox(
-    "Model", 
-    options=["gemini-1.5-flash", "gemini-1.5-pro"]
-)
-
-api_key = st.sidebar.text_input(
-    "Gemini API Key", 
-    type="password", 
-    help="Leave empty to use the environment variable (if set in .env)."
-)
+st.sidebar.info("🤖 **AI Re-ranking is Active**\nYour recommendations are being personalized and explained by Gemini AI.")
 
 # --- Action ---
 if st.sidebar.button("Find Restaurants", type="primary", use_container_width=True):
     with st.spinner("Searching for the best spots..."):
         try:
             # Resolve API Key
-            actual_api_key = api_key or os.getenv("GEMINI_API_KEY") 
+            actual_api_key = os.getenv("GEMINI_API_KEY") 
             if not actual_api_key and "GEMINI_API_KEY" in st.secrets:
                 actual_api_key = st.secrets["GEMINI_API_KEY"]
                 
             llm_client = None
-            if use_ai:
-                if not actual_api_key:
-                    st.error("Gemini API Key is required for AI re-ranking. Provide it in the sidebar or via `.env`.")
-                    st.stop()
-                llm_client = GeminiRecommender(api_key=actual_api_key, model_name=model_name)
+            if not actual_api_key:
+                st.error("Gemini API Key is required for AI re-ranking. Provide it via Streamlit Secrets or environment variables.")
+                st.stop()
+            llm_client = GeminiRecommender(api_key=actual_api_key, model_name="gemini-1.5-flash")
                 
             # Build Preferences
             prefs = UserPreferences.from_raw(
@@ -111,7 +98,7 @@ if st.sidebar.button("Find Restaurants", type="primary", use_container_width=Tru
                 min_rating=min_rating,
                 max_price_bucket=max_price,
                 top_n=top_n,
-                model_name=model_name
+                model_name="gemini-1.5-flash"
             )
             
             # Execute Pipeline
@@ -134,10 +121,10 @@ if st.sidebar.button("Find Restaurants", type="primary", use_container_width=Tru
                         with col2:
                             st.write(f"⭐ **{r.rating or 'N/A'}** ({r.votes or 0} votes)")
                             st.write(f"{'💰' * (r.price_range or 1)}")
-                            if use_ai and r.llm_score is not None:
+                            if r.llm_score is not None:
                                 st.write(f"🧠 **AI Score:** {r.llm_score}/10")
                         
-                        if use_ai and r.llm_explanation:
+                        if r.llm_explanation:
                             st.info(f"**Why this matches you:** {r.llm_explanation}")
 
         except LLMError as e:
