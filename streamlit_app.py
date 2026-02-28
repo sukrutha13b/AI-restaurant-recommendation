@@ -127,7 +127,7 @@ if st.sidebar.button("Find Restaurants", type="primary", use_container_width=Tru
                             st.write(f"⭐ **{r.rating or 'N/A'}** ({r.votes or 0} votes)")
                             st.write(f"{'💰' * (r.price_range or 1)}")
                             if r.llm_score is not None:
-                                st.write(f"🧠 **AI Score:** {r.llm_score}/10")
+                                st.write(f"🧠 **AI Score:** {r.llm_score * 10:.1f}/10")
                         
                         if r.llm_explanation:
                             st.info(f"**Why this matches you:** {r.llm_explanation}")
