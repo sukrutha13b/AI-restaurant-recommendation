@@ -89,7 +89,7 @@ if st.sidebar.button("Find Restaurants", type="primary", use_container_width=Tru
             if not actual_api_key:
                 st.error("Gemini API Key is required for AI re-ranking. Provide it via Streamlit Secrets or environment variables.")
                 st.stop()
-            llm_client = GeminiRecommender(api_key=actual_api_key, model_name="gemini-1.5-flash")
+            llm_client = GeminiRecommender(api_key=actual_api_key, model_name="gemini-2.5-flash")
                 
             # Build Preferences
             prefs = UserPreferences.from_raw(
@@ -98,7 +98,7 @@ if st.sidebar.button("Find Restaurants", type="primary", use_container_width=Tru
                 min_rating=min_rating,
                 max_price_bucket=max_price,
                 top_n=top_n,
-                model_name="gemini-1.5-flash"
+                model_name="gemini-2.5-flash"
             )
             
             # Execute Pipeline

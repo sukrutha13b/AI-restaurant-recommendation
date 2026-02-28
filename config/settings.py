@@ -8,7 +8,7 @@ class Settings(BaseSettings):
 
     # Gemini / LLM settings (placeholders for future phases)
     gemini_api_key: str | None = None
-    gemini_model: str = "gemini-1.5-flash"
+    gemini_model: str = "gemini-2.5-flash"
 
     model_config = {
         "env_file": ".env",

@@ -47,7 +47,7 @@ class RecommendationRequest(BaseModel):
         json_schema_extra={"example": 5},
     )
     model_name: str = Field(
-        default="gemini-1.5-flash",
+        default="gemini-2.5-flash",
         description="Gemini model to use for re-ranking.",
         json_schema_extra={"example": "gemini-1.5-pro"},
     )

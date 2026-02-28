@@ -37,5 +37,5 @@ async def get_filter_metadata() -> FilterMetadata:
     return FilterMetadata(
         cities=sorted(list(cities)),
         cuisines=sorted(list(cuisines)),
-        available_models=["gemini-1.5-flash", "gemini-1.5-pro"]
+        available_models=["gemini-2.5-flash", "gemini-2.5-pro"]
     )

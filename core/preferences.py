@@ -22,7 +22,7 @@ class UserPreferences:
     min_rating: Optional[float] = None  # inclusive, 0.0–5.0
     max_price_bucket: Optional[int] = None  # inclusive, 1–4
     top_n: int = 10  # 1–50
-    model_name: str = "gemini-1.5-flash"
+    model_name: str = "gemini-2.5-flash"
 
     # ------------------------------------------------------------------
     # Construction helpers
@@ -36,7 +36,7 @@ class UserPreferences:
         min_rating: Optional[float] = None,
         max_price_bucket: Optional[int] = None,
         top_n: int = 10,
-        model_name: str = "gemini-1.5-flash",
+        model_name: str = "gemini-2.5-flash",
     ) -> "UserPreferences":
         """
         Build a UserPreferences from raw (potentially un-normalized) inputs.
