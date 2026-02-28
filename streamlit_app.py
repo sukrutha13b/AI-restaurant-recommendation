@@ -1,5 +1,10 @@
 import os
+import sys
 import streamlit as st
+
+# Ensure the project root is in sys.path for Streamlit Cloud
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 from typing import List
 
 from data.loader import load_restaurants
