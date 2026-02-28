@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Restaurant Recommender</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Discover the best restaurants tailored to your preferences using Gemini AI.">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Culinary <span class="accent">Intelligence</span></h1>
+            <p class="subtitle">AI-powered recommendations for your next perfect meal</p>
+        </header>
+
+        <main>
+            <section class="search-section">
+                <form id="recommendation-form" class="search-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <select id="city" name="city" required>
+                                <option value="" disabled selected>Select a city</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cuisine">Cuisine</label>
+                            <select id="cuisine" name="cuisine">
+                                <option value="" selected>All Cuisines</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="min-rating">Min Rating</label>
+                            <input type="number" id="min-rating" name="min_rating" step="0.1" min="0" max="5"
+                                placeholder="4.0">
+                        </div>
+                        <div class="form-group">
+                            <label for="max-price">Max Price Bucket</label>
+                            <select id="max-price" name="max_price_bucket">
+                                <option value="1">Budget (≤₹500)</option>
+                                <option value="2">Mid-Range (≤₹1000)</option>
+                                <option value="3" selected>Upscale (≤₹2000)</option>
+                                <option value="4">Premium (>₹2000)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="top-n">Number of Recommendations</label>
+                        <input type="range" id="top-n" name="top_n" min="1" max="20" value="5">
+                        <span id="top-n-value">5</span>
+                    </div>
+                    <button type="submit" id="submit-btn">Get Recommendations</button>
+                </form>
+            </section>
+
+            <div id="loading" class="hidden">
+                <div class="spinner"></div>
+                <p>Consulting the AI chef...</p>
+            </div>
+
+            <section id="results" class="results-grid hidden">
+                <!-- Results will be injected here -->
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 AI Restaurant Recommendation Service. Built with FastAPI & Gemini.</p>
+        </footer>
+    </div>
+
+    <!-- Template for Restaurant Card -->
+    <template id="restaurant-card-template">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="restaurant-name"></h3>
+                <div class="rating-badge">
+                    <span class="rating-value"></span>
+                    <span class="votes"></span>
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="location"><span class="icon">📍</span> <span class="area"></span>, <span class="city"></span>
+                </p>
+                <div class="cuisines"></div>
+                <div class="price-info">
+                    <span class="price-tier"></span>
+                </div>
+                <div class="explanation-box">
+                    <h4>Why this match?</h4>
+                    <p class="explanation-text"></p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="score-pill">Match: <span class="match-score"></span>%</div>
+            </div>
+        </div>
+    </template>
+
+    <script src="/static/app.js"></script>
+</body>
+
+</html>
